@@ -20,7 +20,7 @@ function App() {
             <InputSection/>
             <DropDownMenu/>
 
-            <Box sx={{marginTop:'40px', backgroundColor:'lightpink', padding:'10px 0', overflow:'auto', height:'400px', scrollbarWidth: 'none'}}>
+            <Box sx={{marginTop:'40px', padding:'10px 0', overflow:'auto', height:'400px', scrollbarWidth: 'none'}}>
             <TodoListItem/>
             <TodoListItem/>
             <TodoListItem/>
