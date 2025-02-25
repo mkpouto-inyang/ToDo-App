@@ -2,7 +2,7 @@ import {Box, Button, InputBase, styled} from "@mui/material"
 
 const CustomInput = styled(InputBase)({
     backgroundColor: "white",
-    width: "640px",
+    width:'100%',
     padding: "8px 20px",
     borderRadius: "10px 2px 2px 10px",
   });
