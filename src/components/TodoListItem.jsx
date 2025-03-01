@@ -15,14 +15,12 @@ const CustomCheckbox = styled(Checkbox)({
     },
   });
 
-const TodoListItem = ({icon, task}) => {
-    
-
+const TodoListItem = ({newTask}) => {
     return ( 
         <Box sx={{backgroundColor:'white', marginBottom:'20px', borderRadius:'8px', display:'flex', justifyContent:'space-between', padding:'15px'}}>
             <Box sx={{display:'flex', gap:'20px', alignItems:'center' }} >
                 <CustomCheckbox />
-                <Typography>Buy Groceries</Typography>
+                <Typography>{newTask}</Typography>
             </Box>
             <Box sx={{display:'flex'}}>
                 <Button>
