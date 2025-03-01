@@ -17,15 +17,19 @@ const AddButton = styled(Button)({
     fontWeight: "bold"
 })
 
-const InputSection = ({addNewTask}) => {
+const InputSection = ({addNewTask, displayErrorToast}) => {
     const [userInput, setUserInput] = useState('');
 
     const handleSubmit =(e)=>{
         e.preventDefault();
         console.log(userInput);
-        addNewTask(userInput);
-        // localStorage.setItem('value', userInput)
-        setUserInput(" ")
+        if (userInput.trim().length === 0){
+            displayErrorToast()
+        } else{
+            addNewTask(userInput);
+            setUserInput(" ")
+        }
+        
     }
 
     return ( 

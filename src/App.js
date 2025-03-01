@@ -31,12 +31,16 @@ function App() {
     setTasks([...tasks, newTask])
   }
 
+  const displayErrorToast = () =>{
+    alert('add a valid task')
+  }
+
   return (
     <>
       <ThemeProvider theme={theme}>
         <Container>
           <TodoWrapper>
-            <InputSection addNewTask={addNewTask}/>
+            <InputSection addNewTask={addNewTask} displayErrorToast={displayErrorToast}/>
             <DropDownMenu/>
 
             <Box sx={{marginTop:'40px', padding:'10px 0', overflow:'auto', height:'400px', scrollbarWidth: 'none'}}>
