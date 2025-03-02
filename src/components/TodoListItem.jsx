@@ -15,7 +15,7 @@ const CustomCheckbox = styled(Checkbox)({
     },
   });
 
-const TodoListItem = ({newTask}) => {
+const TodoListItem = ({newTask, deleteTask, taskId}) => {
     return ( 
         <Box sx={{backgroundColor:'white', marginBottom:'20px', borderRadius:'8px', display:'flex', justifyContent:'space-between', padding:'15px'}}>
             <Box sx={{display:'flex', gap:'20px', alignItems:'center' }} >
@@ -26,7 +26,7 @@ const TodoListItem = ({newTask}) => {
                 <Button>
                     <EditIcon sx={{color: 'gray'}}/>
                 </Button>
-                <Button>
+                <Button onClick={()=> deleteTask(taskId)}>
                     <DeleteIcon sx={{color: 'red'}}/>
                 </Button>
                
