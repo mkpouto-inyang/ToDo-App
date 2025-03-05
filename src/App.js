@@ -91,5 +91,12 @@ function App() {
   );
 }
 
+//Thinking through edit 
+// when edit button is clicked,
+// make the todolist item to become an input box, with the task.text for that id set inside the input
+// One can edit like a regular input box
+// once I write a new thing and click enter, the enter button triggers a function 
+// This function gets the input value and put inlocal storage, in place of the task that was there before
+// The input place becomes noneditable again
 
 export default App;
