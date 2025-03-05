@@ -1,4 +1,4 @@
-import { Box, ThemeProvider, createTheme } from '@mui/material';
+import { Box, ThemeProvider, createTheme, Snackbar, Alert, Button } from '@mui/material';
 import Container from './components/Container';
 import TodoWrapper from './components/ToDoWrapper';
 import InputSection from './components/InputSection';
@@ -17,6 +17,7 @@ function App() {
   const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
   const [filter, setFilter] = useState('All')
   const [tasks, setTasks] = useState(storedTasks);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   useEffect(()=>{
     localStorage.setItem('tasks', JSON.stringify(tasks)
@@ -64,16 +65,23 @@ function App() {
   });
   
 
-  const displayErrorToast = () =>{
-    alert('add a valid task')
-  }
+    // Function to handle opening Snackbar
+    const handleSnackbarOpen = () => {
+      setSnackbarOpen(true);
+    };
+  
+    // Function to close Snackbar
+    const handleSnackbarClose = (event, reason) => {
+      if (reason === 'clickaway') return;
+      setSnackbarOpen(false);
+    };
 
   return (
     <>
       <ThemeProvider theme={theme}>
         <Container>
           <TodoWrapper>
-            <InputSection addNewTask={addNewTask} displayErrorToast={displayErrorToast}/>
+            <InputSection addNewTask={addNewTask} displayErrorToast={handleSnackbarOpen} />
             <DropDownMenu filter={filter} handleFilterChange={handleFilterChange} />
 
 
@@ -85,6 +93,18 @@ function App() {
             ))}
             </Box>
           </TodoWrapper>
+
+             {/* Snackbar for error messages */}
+          <Snackbar
+            open={snackbarOpen}
+            autoHideDuration={3000}
+            onClose={handleSnackbarClose}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          >
+            <Alert onClose={handleSnackbarClose} severity="error" variant="filled" sx={{ width: "100%" }}>
+              Add a valid task. Input cannot be empty.
+            </Alert>
+          </Snackbar>
         </Container>
       </ThemeProvider>
     </>
