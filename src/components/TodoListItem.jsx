@@ -33,12 +33,15 @@ const CustomCheckbox = styled(Checkbox)({
 
     return ( 
       <Box sx={{
-        backgroundColor: 'white', 
-        marginBottom: '20px', 
-        borderRadius: '8px', 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        padding: '15px'
+        backgroundColor: "white",
+        marginBottom: "20px",
+        borderRadius: "8px",
+        display: "flex",
+        flexDirection:  "row", 
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "15px",
+        gap: "10px",
       }}>
         <Box sx={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
           <CustomCheckbox 
