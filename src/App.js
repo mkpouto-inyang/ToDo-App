@@ -15,7 +15,21 @@ const theme = createTheme({
 function App() {
  
   const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  const [filter, setFilter] = useState('All')
+  const [tasks, setTasks] = useState(storedTasks);
 
+  useEffect(()=>{
+    localStorage.setItem('tasks', JSON.stringify(tasks)
+  )  
+  }, [tasks])
+  
+  //add new task
+  const addNewTask = (newTaskText) => {
+    const newTask = { text: newTaskText, completed: false };
+    setTasks([...tasks, newTask]);
+  };
+
+  //delete task
   const deleteTask = (key) => {
     const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
     const updatedTasks = storedTasks.filter((_, index) => index !== key);
@@ -23,18 +37,26 @@ function App() {
     setTasks(updatedTasks)
   };
 
-  //initialize empty array with stored tasks
-  const [tasks, setTasks] = useState(storedTasks);
-
-  // Update localStorage whenever the tasks array changes
-  useEffect(()=>{
-    localStorage.setItem('tasks', JSON.stringify(tasks)
-  )  
-  }, [tasks])
+  //edit task
   
-  const addNewTask = (newTask) =>{
-    setTasks([...tasks, newTask])
-  }
+
+  const toggleTaskCompletion = (taskId) => {
+    const updatedTasks = tasks.map((task, index) =>
+      index === taskId ? { ...task, completed: !task.completed } : task
+    );
+    setTasks(updatedTasks);
+  };
+
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value);
+  };
+
+  const filteredTasks = tasks.filter(task => {
+    if (filter === "Completed") return task.completed; 
+    if (filter === "To do") return !task.completed;  
+    return true;  
+  });
+  
 
   const displayErrorToast = () =>{
     alert('add a valid task')
@@ -46,11 +68,13 @@ function App() {
         <Container>
           <TodoWrapper>
             <InputSection addNewTask={addNewTask} displayErrorToast={displayErrorToast}/>
-            <DropDownMenu/>
+            <DropDownMenu filter={filter} handleFilterChange={handleFilterChange} />
+
 
             <Box sx={{marginTop:'40px', padding:'10px 0', overflow:'auto', height:'400px', scrollbarWidth: 'none'}}>
-            {tasks.map((task, index) => (
-              <TodoListItem key={index} taskId={index} newTask={task} deleteTask={deleteTask} />
+            {filteredTasks.map((task, index) => (
+              <TodoListItem key={index} taskId={index} task={task} deleteTask={deleteTask}   toggleTaskCompletion={toggleTaskCompletion}
+              />
             ))}
             </Box>
           </TodoWrapper>

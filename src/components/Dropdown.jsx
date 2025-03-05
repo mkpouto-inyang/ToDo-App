@@ -22,10 +22,10 @@ const CustomDropDown = styled(Select)({
     },
   });
 
-const DropDownMenu = () => {
+const DropDownMenu = ({filter, handleFilterChange }) => {
   return (
     <FormControl sx={{ minWidth: 250, marginTop:4}} size="small">
-      <CustomDropDown>
+      <CustomDropDown value={filter} handleFilterChange  onChange={(event) => handleFilterChange(event)} >
         <CustomMenuItem value="All">All</CustomMenuItem>
         <CustomMenuItem value="To do">To do</CustomMenuItem>
         <CustomMenuItem value="Completed">Completed</CustomMenuItem>
