@@ -38,7 +38,13 @@ function App() {
   };
 
   //edit task
-  
+  const updateTask = (taskId, newText) => {
+    const updatedTasks = tasks.map((task, index) =>
+      index === taskId ? { ...task, text: newText } : task
+    );
+    setTasks(updatedTasks);
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  };
 
   const toggleTaskCompletion = (taskId) => {
     const updatedTasks = tasks.map((task, index) =>
@@ -74,6 +80,7 @@ function App() {
             <Box sx={{marginTop:'40px', padding:'10px 0', overflow:'auto', height:'400px', scrollbarWidth: 'none'}}>
             {filteredTasks.map((task, index) => (
               <TodoListItem key={index} taskId={index} task={task} deleteTask={deleteTask}   toggleTaskCompletion={toggleTaskCompletion}
+              updateTask={updateTask} 
               />
             ))}
             </Box>

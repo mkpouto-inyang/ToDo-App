@@ -1,7 +1,9 @@
-import {Box, Button, styled, Typography} from '@mui/material'
+import {Box, Button, styled, Typography, TextField} from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Checkbox from '@mui/material/Checkbox';
+import { useState } from "react";
+
 
 const CustomCheckbox = styled(Checkbox)({
     "&.MuiCheckbox-root": {
@@ -15,7 +17,20 @@ const CustomCheckbox = styled(Checkbox)({
     },
   });
 
-  const TodoListItem = ({ task, deleteTask, taskId, toggleTaskCompletion }) => {
+  const TodoListItem = ({ task, deleteTask, taskId, toggleTaskCompletion, updateTask}) => {
+
+    const [isEditing, setIsEditing] = useState(false);
+    const [newText, setNewText] = useState(task.text);
+
+     // When Enter is pressed, save changes
+    const handleEditSubmit = (e) => {
+    if (e.key === "Enter" && newText.trim() !== "") {
+      updateTask(taskId, newText);
+      setIsEditing(false);
+    }
+  };
+  
+
     return ( 
       <Box sx={{
         backgroundColor: 'white', 
@@ -30,16 +45,33 @@ const CustomCheckbox = styled(Checkbox)({
             checked={task.completed}
             onChange={() => toggleTaskCompletion(taskId)}
           />
-          <Typography sx={{
-            textDecoration: task.completed ? 'line-through' : 'none',
-            color: task.completed ? 'gray' : 'black'
-          }}>
+
+            
+        {isEditing ? (
+          <TextField
+            value={newText}
+            onChange={(e) => setNewText(e.target.value)}
+            onKeyDown={handleEditSubmit}
+            onBlur={() => {
+              setNewText(task.text);
+              setIsEditing(false);
+            }}
+            autoFocus
+          />
+        ) : (
+          <Typography
+            sx={{
+              textDecoration: task.completed ? "line-through" : "none",
+              color: task.completed ? "gray" : "black",
+            }}
+          >
             {task.text}
           </Typography>
+        )}
         </Box>
         <Box sx={{ display: 'flex' }}>
-          <Button>
-            <EditIcon sx={{ color: 'gray' }} />
+          <Button onClick={() => setIsEditing(true)}>
+            <EditIcon sx={{ color: 'gray'}} />
           </Button>
           <Button onClick={() => deleteTask(taskId)}>
             <DeleteIcon sx={{ color: 'red' }} />
